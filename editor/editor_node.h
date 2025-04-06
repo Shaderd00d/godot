@@ -519,8 +519,6 @@ private:
 	void _android_explore_build_templates();
 
 	void _request_screenshot();
-	void _screenshot(bool p_use_utc = false);
-	void _save_screenshot(NodePath p_path);
 
 	void _check_system_theme_changed();
 

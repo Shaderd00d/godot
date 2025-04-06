@@ -45,6 +45,7 @@
 #include "editor/gui/editor_run_bar.h"
 #include "editor/gui/editor_spin_slider.h"
 #include "editor/plugins/animation_player_editor_plugin.h"
+#include "editor/plugins/editor_screenshot_plugin.h"
 #include "editor/plugins/gizmos/audio_listener_3d_gizmo_plugin.h"
 #include "editor/plugins/gizmos/audio_stream_player_3d_gizmo_plugin.h"
 #include "editor/plugins/gizmos/camera_3d_gizmo_plugin.h"
@@ -3750,6 +3751,9 @@ void Node3DEditorViewport::_menu_option(int p_option) {
 			spatial_editor->update_transform_gizmo();
 			view_display_menu->get_popup()->set_item_checked(idx, current);
 		} break;
+		case TAKE_SCREENSHOT: {
+			ScreenshotPlugin::get_singleton()->take_screenshot(ScreenshotPlugin::ScreenshotSource::SPATIAL_EDITOR, viewport, index);
+		} break;
 		case VIEW_HALF_RESOLUTION: {
 			int idx = view_display_menu->get_popup()->get_item_index(VIEW_HALF_RESOLUTION);
 			bool current = view_display_menu->get_popup()->is_item_checked(idx);
@@ -5680,6 +5684,9 @@ Node3DEditorViewport::Node3DEditorViewport(Node3DEditor *p_spatial_editor, int p
 	view_display_menu->get_popup()->add_check_shortcut(ED_SHORTCUT("spatial_editor/view_information", TTRC("View Information")), VIEW_INFORMATION);
 	view_display_menu->get_popup()->add_check_shortcut(ED_SHORTCUT("spatial_editor/view_fps", TTRC("View Frame Time")), VIEW_FRAME_TIME);
 	view_display_menu->get_popup()->set_item_checked(view_display_menu->get_popup()->get_item_index(VIEW_ENVIRONMENT), true);
+	view_display_menu->get_popup()->add_separator();
+	view_display_menu->get_popup()->add_shortcut(ED_SHORTCUT("spatial_editor/take_screenshot", TTRC("Take Screenshot")), TAKE_SCREENSHOT);
+	view_display_menu->get_popup()->set_item_tooltip(-1, TTR("Screenshots are stored in the user data folder (\"user://\")."));
 	view_display_menu->get_popup()->add_separator();
 	view_display_menu->get_popup()->add_check_shortcut(ED_SHORTCUT("spatial_editor/view_half_resolution", TTRC("Half Resolution")), VIEW_HALF_RESOLUTION);
 	view_display_menu->get_popup()->add_separator();

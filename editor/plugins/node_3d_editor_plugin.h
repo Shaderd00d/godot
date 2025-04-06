@@ -32,6 +32,7 @@
 
 #include "core/math/dynamic_bvh.h"
 #include "editor/plugins/editor_plugin.h"
+#include "editor/plugins/editor_screenshot_plugin.h"
 #include "editor/plugins/node_3d_editor_gizmos.h"
 #include "editor/themes/editor_scale.h"
 #include "scene/gui/box_container.h"
@@ -55,6 +56,7 @@ class Node3DEditorViewport;
 class OptionButton;
 class PanelContainer;
 class ProceduralSkyMaterial;
+class ScreenshotSaver;
 class SubViewport;
 class SubViewportContainer;
 class VSeparator;
@@ -122,6 +124,7 @@ class Node3DEditorViewport : public Control {
 		VIEW_ENVIRONMENT,
 		VIEW_ORTHOGONAL,
 		VIEW_SWITCH_PERSPECTIVE_ORTHOGONAL,
+		TAKE_SCREENSHOT,
 		VIEW_HALF_RESOLUTION,
 		VIEW_AUDIO_LISTENER,
 		VIEW_AUDIO_DOPPLER,

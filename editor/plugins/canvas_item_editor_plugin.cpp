@@ -34,6 +34,7 @@
 #include "core/input/input.h"
 #include "core/os/keyboard.h"
 #include "editor/debugger/editor_debugger_node.h"
+#include "editor/editor_interface.h"
 #include "editor/editor_main_screen.h"
 #include "editor/editor_node.h"
 #include "editor/editor_settings.h"
@@ -44,6 +45,7 @@
 #include "editor/gui/editor_zoom_widget.h"
 #include "editor/plugins/animation_player_editor_plugin.h"
 #include "editor/plugins/editor_context_menu_plugin.h"
+#include "editor/plugins/editor_screenshot_plugin.h"
 #include "editor/plugins/script_editor_plugin.h"
 #include "editor/scene_tree_dock.h"
 #include "editor/themes/editor_scale.h"
@@ -61,6 +63,7 @@
 #include "scene/gui/subviewport_container.h"
 #include "scene/gui/view_panner.h"
 #include "scene/main/canvas_layer.h"
+#include "scene/main/viewport.h"
 #include "scene/main/window.h"
 #include "scene/resources/packed_scene.h"
 #include "scene/resources/style_box_texture.h"
@@ -4813,6 +4816,11 @@ void CanvasItemEditor::_popup_callback(int p_op) {
 			_focus_selection(p_op);
 
 		} break;
+		case TAKE_SCREENSHOT: {
+			EditorInterface *ei = EditorInterface::get_singleton();
+			Viewport *vp = ei->get_editor_viewport_2d()->get_viewport();
+			ScreenshotPlugin::get_singleton()->take_screenshot(ScreenshotPlugin::ScreenshotSource::CANVAS_EDITOR, vp);
+		} break;
 		case PREVIEW_CANVAS_SCALE: {
 			bool preview = view_menu->get_popup()->is_item_checked(view_menu->get_popup()->get_item_index(PREVIEW_CANVAS_SCALE));
 			preview = !preview;
@@ -5626,6 +5634,10 @@ CanvasItemEditor::CanvasItemEditor() {
 	theme_menu->add_radio_check_item(TTR("Editor theme"), THEME_PREVIEW_EDITOR);
 	theme_menu->add_radio_check_item(TTR("Default theme"), THEME_PREVIEW_DEFAULT);
 	p->add_submenu_node_item(TTR("Preview Theme"), theme_menu);
+
+	p->add_separator();
+	p->add_shortcut(ED_SHORTCUT("canvas_item_editor/take_screenshot", TTRC("Take Screenshot")), TAKE_SCREENSHOT);
+	p->set_item_tooltip(-1, TTR("Screenshots are stored in the user data folder (\"user://\")."));
 
 	theme_preview = (ThemePreviewMode)(int)EditorSettings::get_singleton()->get_project_metadata("2d_editor", "theme_preview", THEME_PREVIEW_PROJECT);
 	for (int i = 0; i < THEME_PREVIEW_MAX; i++) {

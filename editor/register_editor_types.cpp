@@ -83,6 +83,7 @@
 #include "editor/plugins/editor_context_menu_plugin.h"
 #include "editor/plugins/editor_debugger_plugin.h"
 #include "editor/plugins/editor_resource_tooltip_plugins.h"
+#include "editor/plugins/editor_screenshot_plugin.h"
 #include "editor/plugins/font_config_plugin.h"
 #include "editor/plugins/gpu_particles_collision_sdf_editor_plugin.h"
 #include "editor/plugins/gradient_editor_plugin.h"
@@ -237,6 +238,7 @@ void register_editor_types() {
 	EditorPlugins::add_by_type<PhysicalBone3DEditorPlugin>();
 	EditorPlugins::add_by_type<Polygon3DEditorPlugin>();
 	EditorPlugins::add_by_type<ResourcePreloaderEditorPlugin>();
+	EditorPlugins::add_by_type<ScreenshotPlugin>();
 	EditorPlugins::add_by_type<ShaderEditorPlugin>();
 	EditorPlugins::add_by_type<ShaderFileEditorPlugin>();
 	EditorPlugins::add_by_type<Skeleton3DEditorPlugin>();
